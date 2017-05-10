@@ -51,4 +51,30 @@
 
 class Course
 
+  attr_reader :name, :department, :credits, :days, :time_block
+
+  def initialize(name, department, credits, days, time_block)
+    @name = name
+    @department = department
+    @credits = credits
+    @days = days
+    @time_block = time_block
+    @students = []
+  end
+
+  def students
+    @students
+  end
+
+  def add_student(new_student)
+    new_student.enroll(self)
+  end
+
+  def conflicts_with?(course)
+    if time_block == course.time_block && days.any? { |day| course.days.include?(day) }
+      return true
+    end
+    false
+  end
+
 end
